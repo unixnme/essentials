@@ -13,12 +13,13 @@ void cleanup(std::istream &istream) {
     std::string line;
     while (std::getline(istream, line)) {
         std::istringstream ss{line};
-        std::vector<std::string> tokens{std::istream_iterator<std::string>{ss}, std::istream_iterator<std::string>{}};
-        if (tokens.empty()) continue;
-        std::cout << tokens.front();
-        for (int i=1; i<tokens.size(); i++)
-            std::cout << " " + tokens[i];
-        std::cout << std::endl;
+        std::istream_iterator<std::string> it{ss};
+        std::istream_iterator<std::string> eos;
+        std::string buffer;
+        for (; it!=eos; it++) buffer += *it + " ";
+        if (buffer.empty()) continue;
+        buffer.resize(buffer.size() - 1);
+        std::cout << buffer << "\n";
     }
 }
 
